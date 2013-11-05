@@ -1,0 +1,32 @@
+<html>
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <h1>Welcome to game night!</h1>
+    <div id="messages"></div>
+    <ul id="tables">
+        {% for table in tables %}
+            <li class="table">
+                <div id="tableName">{{ table.name }}</div>
+                <div id="maxUsers">{{ table.max_guests }}</div>
+                <ul>
+                    {% for guest in table.guests.all %}
+                        <li class="guest">
+                            <div id="guestName">{{ guest.name }}</div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% endfor %}
+    </ul>
+
+</body>
+
+<script>
+
+</script>
+
+</html>
+
