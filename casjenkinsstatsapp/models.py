@@ -5,7 +5,7 @@ from django.db import models
 
 class Table(models.Model):
     max_guests = models.IntegerField()
-    guests = models.ManyToManyField('Guest')
+    guests = models.ManyToManyField('Guest', through='Membership')
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=500)
 
@@ -18,3 +18,8 @@ class Guest(models.Model):
 
     def __unicode__(self):
         return self.name
+
+
+class Membership(models.Model):
+    table = models.ForeignKey(Table)
+    guest = models.ForeignKey(Guest)

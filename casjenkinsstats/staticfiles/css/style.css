@@ -1,0 +1,77 @@
+body {
+    padding: 0 0 0 15px;
+}
+
+.darkred {
+    color: darkred;
+}
+
+.display-none {
+    display: none;
+}
+
+.max-guests {
+    font-size: 12px;
+    font-weight: bold;
+    margin: 8px 0 0 0;
+}
+
+.bordered {
+    border: 2px solid #606060;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.head3 {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.center {
+    text-align: center;
+}
+
+hr {
+    margin: 0;
+    padding: 0;
+}
+
+ul {
+    list-style-type: none;
+    list-style-position:inside;
+    margin:0;
+    padding:0;
+    width: 500px;
+}
+
+.display-inline {
+    display: inline;
+}
+
+.display-block {
+    display: block;
+}
+
+.table {
+    width: 100px;
+}
+
+.guest {
+    color: darkgrey;
+}
+
+.clickable:hover {
+    cursor: hand;
+}
+
+.remove {
+    color: darkred;
+    font-size: 11px;
+    font-weight: bold;
+    padding: 0 0 0 10px;
+    cursor: hand;
+}
+
+.guestList {
+    margin: 5px 0 10px 0;
+}

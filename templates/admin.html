@@ -1,11 +1,75 @@
 <html>
 <head>
+    {% load static %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.min.css">
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery/jquery-2.0.3.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/main.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/admin.js"></script>
 </head>
 <body>
-    <h1>Admin page</h1>
-    <div id="tables"></div>
-    <div id="createTable"></div>
-    <div id="setText"></div>
+
+    <h1>Admin Page</h1>
+    <div id="messages"></div>
+        <ul id="tables" class="">
+        {% for table in tables %}
+
+            <li id="table_{{ table.pk }}" class="table bordered">
+                <div id="tableName" class="head3 text-center">{{ table.name }}</div>
+                <div name="deleteTableButton_{{ table.pk }}" class="remove text-center">[DELETE]</div>
+                <hr/>
+                <div id="tableDescription">{{ table.description }}</div>
+                <div id="maxGuests" maxGuests="{{ table.max_guests }}" class="font-small max-guests">Max players: {{ table.max_guests }}</div>
+                <hr/>
+                <div class="guestList">
+                    <label for="guestsList_{{ table.pk }}">players:</label>
+                    <ul id="guestsList_{{ table.pk }}" class="">
+                        {% for guest in table.guests.all %}
+                            <li id="guest_{{ guest.pk }}" class="guest">
+                                <span id="guestName">{{ guest.name }}</span>
+                                <span name="deleteGuestButton_{{ guest.pk }}_{{ table.pk }}" class="remove">[remove]</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div id="newGuest_{{ table.pk }}" class="{% if table.guests.all|length >= table.max_guests  %}display-none{% endif %}">
+                    <input type="text" id="newGuestName_{{ table.pk }}">
+                    <input type="button" name="newGuestButton_{{ table.pk }}" value="Join">
+                </div>
+            </li>
+
+        {% endfor %}
+        </ul>
+
+    <form role="form" action="/table/add" method="get" class="col-sm-3 bordered">
+        <h3>Add Table</h3>
+        <div class="form-group">
+            <label for="newTableName" class="col-sm-4 control-label">Name:</label>
+            <input type="text" class="form-control" id="newTableName" name="tableName">
+        </div>
+        <div class="form-group">
+            <label for="newTableDescription" class="col-sm-4 control-label">Description:</label>
+            <textarea class="form-control" rows="4" id="newTableDescription" name="tableDescription"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="newTableMaxGuests" class="col-sm-4 control-label">Max Players:</label>
+            <input type="text" class="form-control" id="newTableMaxGuests" name="maxGuests">
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-default">Add table</button>
+        </div>
+    </form>
+    {#########################################}
+    {############### templates ###############}
+    {#########################################}
+
+    <!-- guest element template -->
+    <li id="guest_template" class="guest display-none">
+        <span id="guestName"></span>
+        <span name="" class="remove">[remove]</span>
+    </li>
 
 </body>
+
 </html>
+

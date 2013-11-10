@@ -1,3 +1,4 @@
+from logging import Logger
 import os
 
 DEBUG = True
@@ -62,8 +63,13 @@ MEDIA_URL = ''
 MEDIA_ROOT = os.path.join(PROJECT_DIR, 'media')
 MEDIA_URL = '/media/'
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+'django.core.context_processors.static',
+)
+
 
 STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
+
 STATIC_URL = '/static/'
 
 # Additional locations of static files
@@ -150,3 +156,6 @@ LOGGING = {
         },
     }
 }
+
+print("static root: " + STATIC_ROOT)
+print("static files dirs: " + str(STATICFILES_DIRS))

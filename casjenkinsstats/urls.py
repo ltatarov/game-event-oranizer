@@ -8,8 +8,16 @@ from casjenkinsstats import settings
 from casjenkinsstatsapp import adminView, mainView
 
 urlpatterns = patterns('',
-    url(regex=r'^admin', view=adminView.initPage, name='casjenkinsstatsapp.mainView.main'),
-    url(regex='^$', view=mainView.initPage, name='casjenkinsstatsapp.adminView.main'),
+    url(regex=r'^$', view=mainView.initPage, name='casjenkinsstatsapp.mainView.main'),
+    url(regex=r'^admin', view=adminView.initPage, name='casjenkinsstatsapp.adminView.main'),
+
+    # table api
+    url(regex=r'^table/add', view=adminView.addTable, name='casjenkinsstatsapp.adminView.main'),
+    url(regex=r'^table/delete', view=adminView.deleteTable, name='casjenkinsstatsapp.adminView.main'),
+
+    # table api
+    url(regex=r'^guest/add', view=mainView.addGuest, name='casjenkinsstatsapp.mainView.main'),
+    url(regex=r'^guest/delete', view=mainView.deleteGuest, name='casjenkinsstatsapp.mainView.main'),
 
     # url(regex=r'^tests', view=views.buildsTests, name='casjenkinsstatsapp.views.main'),
 

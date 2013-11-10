@@ -1,9 +1,10 @@
 # Create your views here.
+import json
+from django.http import QueryDict, HttpResponse
 
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from casjenkinsstatsapp import STATUS_OK, STATUS_FAIL
-from casjenkinsstatsapp.models import Guest, Table
+from casjenkinsstatsapp.models import Guest, Table, Membership
 
 
 def initPage(request):
@@ -17,34 +18,29 @@ def initPage(request):
                               context_instance=RequestContext(request))
 
 
-def addGuest(request, tableId, guest):
+def addGuest(request):
 
-    table = Table.objects.get(pk=tableId)
-    newGuest = Guest(name=guest.get('name'), table=table)
+    GET = request.GET
+    guest = QueryDict(GET.get('guest').encode())
+    tableId = int(GET.get('tableId').encode())
+
+    newGuest = Guest(name=guest.get('name'))
     newGuest.save()
+    table = Table.objects.get(pk=tableId)
+    membership = Membership(table=table, guest=newGuest)
+    membership.save()
 
-    #TODO: find better way to assert guest created
-    assertGuest = Guest.objects.get(pk=newGuest.pk)
-    if assertGuest:
-        status = STATUS_OK
-    else:
-        status = STATUS_FAIL
-    return render_to_response('main.html',
-                              {'status': status},
-                              context_instance=RequestContext(request))
+    json_response = json.dumps({'guestId': newGuest.pk})
+    return HttpResponse(json_response, mimetype='application/json')
 
 
-def removeGuest(request, guestId):
+def deleteGuest(request):
+
+    GET = request.GET
+    guestId = GET.get('guestId').encode()
+
     guest = Guest.objects.get(pk=guestId)
     guest.delete()
 
-    #TODO: find better way to assert guest deleted
-    assertGuest = Guest.objects.get(pk=guestId)
-    if assertGuest:
-        status = STATUS_FAIL
-    else:
-        status = STATUS_OK
-    return render_to_response('main.html',
-                              {'status': status},
-                              context_instance=RequestContext(request))
+    return initPage(request)
 
