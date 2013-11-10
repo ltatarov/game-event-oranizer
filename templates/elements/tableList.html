@@ -1,0 +1,36 @@
+<ul id="tables" class="">
+    {% for table in tables %}
+
+        <li id="table_{{ table.pk }}" class="table bordered">
+            <div id="tableName" class="head3 text-center">{{ table.name }}</div>
+            {% if isAdmin %}
+                <div name="deleteTableButton_{{ table.pk }}" class="remove text-center">[DELETE]</div>
+            {% endif %}
+            <hr/>
+            <div id="tableDescription">{{ table.description }}</div>
+            <div id="maxGuests" maxGuests="{{ table.max_guests }}" class="font-small max-guests">Max players: {{ table.max_guests }}</div>
+            <a id="maxGuests" href="{{ table.link }}" target="_blank" class="font-small max-guests">link</a>
+            <hr/>
+            <div class="guestList">
+                <label for="guestsList_{{ table.pk }}">players:</label>
+                <ul id="guestsList_{{ table.pk }}" class="">
+                    {% for guest in table.guests.all %}
+                        <li id="guest_{{ guest.pk }}" class="guest">
+                            <span id="guestName">{{ guest.name }}</span>
+                            {% if isAdmin %}
+                                <span name="deleteGuestButton_{{ guest.pk }}_{{ table.pk }}" class="remove">[remove]</span>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div id="newGuest_{{ table.pk }}" class="{% if table.guests.all|length >= table.max_guests  %}display-none{% endif %}">
+                <input type="text" id="newGuestName_{{ table.pk }}">
+                <input type="button" name="newGuestButton_{{ table.pk }}" value="Join">
+            </div>
+        </li>
+
+    {% endfor %}
+
+    {% include "elements/guest.html" %}
+</ul>

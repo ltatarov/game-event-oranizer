@@ -1,47 +1,13 @@
 <html>
 <head>
-    {% load static %}
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css">
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.min.css">
-    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery/jquery-2.0.3.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/main.js"></script>
+    {% include "common/head.html" %}
 </head>
 <body>
     <h1>Welcome to game night!</h1>
     <hr>
     <div id="messages"></div>
-    <ul id="tables">
-        {% for table in tables %}
 
-            <li id="table_{{ table.pk }}" class="table bordered">
-                <div id="tableName" class="head3 text-center">{{ table.name }}</div>
-                <hr/>
-                <div id="tableDescription">{{ table.description }}</div>
-                <div id="maxGuests" maxGuests="{{ table.max_guests }}" class="font-small">Max players: {{ table.max_guests }}</div>
-                <hr/>
-                <div class="guestList">
-                    <label for="guestsList_{{ table.pk }}">players:</label>
-                    <ul id="guestsList_{{ table.pk }}" class="">
-                        {% for guest in table.guests.all %}
-                            <li id="guest_{{ guest.pk }}" class="guest">
-                                <span id="guestName">{{ guest.name }}</span>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-                <div id="newGuest_{{ table.pk }}" class="{% if table.guests.all|length >= table.max_guests  %}display-none{% endif %}">
-                    <input type="text" id="newGuestName_{{ table.pk }}">
-                    <input type="button" name="newGuestButton_{{ table.pk }}" value="Join">
-                </div>
-            </li>
-
-        {% endfor %}
-    </ul>
-
-    <!-- guest element template -->
-    <li id="guest_template" class="guest display-none">
-        <span id="guestName"></span>
-    </li>
+    {% include "elements/tableList.html" %}
 
 
 </body>

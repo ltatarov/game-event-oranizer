@@ -10,7 +10,10 @@ def initPage(request):
 
     # return data
     return render_to_response('admin.html',
-                              {'tables': tables},
+                              {
+                                  'tables': tables,
+                                  'isAdmin': True
+                              },
                               context_instance=RequestContext(request))
 
 
@@ -19,9 +22,10 @@ def addTable(request):
     GET = request.GET
     tableName = GET.get('tableName').encode()
     tableDescription = GET.get('tableDescription').encode()
+    link = GET.get('link').encode()
     maxGuests = int(GET.get('maxGuests').encode())
 
-    table = Table(max_guests=maxGuests, name=tableName, description=tableDescription)
+    table = Table(max_guests=maxGuests, name=tableName, description=tableDescription, link=link)
     table.save()
 
     return initPage(request)
